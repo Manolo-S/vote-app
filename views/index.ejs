@@ -1,27 +1,32 @@
+<!DOCTYPE html>
 <html>
-    
 <head>
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/highcharts/highcharts.js"></script>
+    <script src="javascripts/pollStorage.js"></script>
+   
+    <title></title>
 </head>
-
-    <body>
-        <div>
+<body onload="abc()">
+    <div>
+        <ul class="social list-inline">
+            <li>
+                <a class="googleplus" href="/auth/google"><i class=
+                "fa fa-google-plus"></i></a> <a class="twitter" href=
+                "/auth/twitter"><i class="fa fa-twitter"></i></a> <a class=
+                "facebook" href="/auth/facebook"><i class=
+                "fa fa-facebook"></i></a>
+            </li>
+        </ul>
+    </div>
+    
+       
             
-        <%=title%>
-           
-           <ul class="social list-inline">
-              <li>
-               <a href="/auth/google" class="googleplus"><i class="fa fa-google-plus"></i></a>
-               <a href="/auth/twitter" class="twitter"><i class="fa fa-twitter"></i></a>
-               <a href="/auth/facebook" class="facebook"><i class="fa fa-facebook"></i></a>
-               </li>
-           </ul>
-            
-        </div>
-    </body>
+    
+    <div id="container"></div>
+</body >
 </html>

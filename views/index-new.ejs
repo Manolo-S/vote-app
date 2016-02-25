@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+   
+    <title></title>
+</head>
+<body>
+    <div>
+        <%=title%>
+        <ul class="social list-inline">
+            <li>
+                <a class="googleplus" href="/auth/google"><i class=
+                "fa fa-google-plus"></i></a> <a class="twitter" href=
+                "/auth/twitter"><i class="fa fa-twitter"></i></a> <a class=
+                "facebook" href="/auth/facebook"><i class=
+                "fa fa-facebook"></i></a>
+            </li>
+        </ul>
+    </div>
+    <script src='bundle.js' type='text/javscript'>
+    
+
+    "use strict";
+
+    // var mongoose = require('mongoose');
+    // var db = mongoose.connect('mongodb://localhost/voteapp');
+    // var Schema = mongoose.Schema;
+    // var pollName;
+    // var categories;
+    // var scores;
+
+    // var PollItemSchema = new Schema({
+    //                         categorie: String,
+    //                         votes: Number,
+    //                         _id: false
+    //                         });
+
+    // var PollSchema = new Schema({
+    //                         pollName: String,
+    //                         pollItems: [PollItemSchema]
+    //                         });
+
+    // var pollModel = mongoose.model('poll', PollSchema);
+
+    // var data = [{
+    // pollName: 'Who would you vote for?',
+    // pollData: [{
+    //                 categorie: 'Trump',
+    //                 votes: 45
+    //             }, {
+    //                 categorie: 'Rubio',
+    //                 votes: 20
+    //             }, {
+    //                 categorie: 'Cruz',
+    //                 votes: 22
+    //             }, {
+    //                 categorie: 'Hillary',
+    //                 votes: 52
+    //             }, {
+    //                 categorie: 'Sanders',
+    //                 votes: 48
+    //             }]
+    // }];
+
+    // pollModel.create({
+    //             pollName: data[0].pollName,
+    //             pollItems: data[0].pollData.map(categoriesFun)
+    //             }, function(err, poll) {
+    //             if (!err) {
+    //                 console.log("Poll Saved");
+    //                 console.log(poll);
+    //             }
+    // });
+
+
+    // function categoriesFun (pollItem) {
+    //         return pollItem.categorie;
+    // }
+
+    // function votesFun (pollItem) {
+    //         return pollItem.votes
+    // }
+
+
+    // pollModel.find({}, function(err, poll){
+
+    //     pollName = poll.pollName;
+    //     categories = poll.pollItems.map(categorieFun);
+    //     scores = poll.pollItems.map(votesFun);
+
+    // });
+
+
+             
+            
+    </script>
+    <div id="container"></div>
+</body>
+</html>

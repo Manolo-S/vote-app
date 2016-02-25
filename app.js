@@ -4,9 +4,81 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var session = require('express-session');//TODO bekijk
+var mongoose = require('mongoose');
 
-var routes = require('./routes/index');
+var db = mongoose.connect('mongodb://localhost/voteapp');
+var pollData;
+var Schema = mongoose.Schema; 
+var pollData;
+var pollName;
+var categories;
+var scores;
+
+function pollItemsFun(pollItem) {
+    return pollItem;
+}
+
+var PollItemSchema = new Schema({
+    categorie: String,
+    votes: Number,
+    _id: false
+});
+var PollSchema = new Schema({
+    pollName: String,
+    pollItems: [PollItemSchema]
+});
+var pollModel = mongoose.model('polls', PollSchema);
+var data = [{
+    pollName: 'Who would you vote for?',
+    pollItems: [{
+        categorie: 'Trump',
+        votes: 45
+    }, {
+        categorie: 'Rubio',
+        votes: 20
+    }, {
+        categorie: 'Cruz',
+        votes: 22
+    }, {
+        categorie: 'Hillary',
+        votes: 52
+    }, {
+        categorie: 'Sanders',
+        votes: 48
+    }]
+}];
+
+pollModel.create({
+    pollName: data[0].pollName,
+    pollItems: data[0].pollItems.map(pollItemsFun)
+        }, function(err, polls) {
+        if (!err) {
+                pollData = {"pollData": polls};
+                console.log(pollData);
+
+             console.log('saved polldata');
+            // pollModel.find({}, function(err, polls) {
+            //     console.log('retrieved data');
+            //     pollData = {"pollData": polls};
+            //     console.log(pollData);
+            //     // res.json(pollData);       // send Polldata to browser
+
+            //     mongoose.connection.close(function() {
+            //         console.log(
+            //             'data stored, Mongoose connection disconnected'
+            //         );
+            //     });
+            //      next();
+            }});
+
+
+
+var index = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
+// var data = require('./routes/data');
 
 var app = express();
 
@@ -18,12 +90,44 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use(session({secret: 'anything'})); //TODO bekijk
+
+require('./config/passport')(app);  //TODO bekijk
+
+// app.use('/data', data);
+app.use('/data/polldata', function(req,res,next){
+    console.log('data.js router.use called');
+
+    pollModel.find({}, function(err, polls) {
+                console.log('retrieved data');
+                pollData = {"pollData": polls};
+                console.log(pollData);
+                // res.json(pollData);       // send Polldata to browser
+
+                mongoose.connection.close(function() {
+                    console.log(
+                        'Mongoose connection disconnected'
+                    );
+                });
+                 next();
+            });
+
+});
+
+
+app.get('/data/polldata', function(req, res) {
+    res.json(pollData);    
+});
+
+app.use('/', index);
+
 app.use('/users', users);
+app.use('/auth', auth);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
