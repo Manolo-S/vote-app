@@ -59,18 +59,7 @@ pollModel.create({
                 console.log(pollData);
 
              console.log('saved polldata');
-            // pollModel.find({}, function(err, polls) {
-            //     console.log('retrieved data');
-            //     pollData = {"pollData": polls};
-            //     console.log(pollData);
-            //     // res.json(pollData);       // send Polldata to browser
-
-            //     mongoose.connection.close(function() {
-            //         console.log(
-            //             'data stored, Mongoose connection disconnected'
-            //         );
-            //     });
-            //      next();
+           
             }});
 
 
@@ -99,14 +88,17 @@ app.use(session({secret: 'anything'})); //TODO bekijk
 require('./config/passport')(app);  //TODO bekijk
 
 // app.use('/data', data);
-app.use('/data/polldata', function(req,res,next){
+app.use('/data/polldata', function(req,res,next){ //TODO data functies in
+  if (mongoose.connection.readyState = 0){        //apart bestand als het lukt
+    var db = mongoose.connect('mongodb://localhost/voteapp');
+  }
+
     console.log('data.js router.use called');
 
     pollModel.find({}, function(err, polls) {
                 console.log('retrieved data');
                 pollData = {"pollData": polls};
                 console.log(pollData);
-                // res.json(pollData);       // send Polldata to browser
 
                 mongoose.connection.close(function() {
                     console.log(
@@ -118,6 +110,9 @@ app.use('/data/polldata', function(req,res,next){
 
 });
 
+app.get('/create-poll', function(req, res){
+  res.render('createPoll.ejs');
+});
 
 app.get('/data/polldata', function(req, res) {
     res.json(pollData);    

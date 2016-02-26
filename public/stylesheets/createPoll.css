@@ -1,0 +1,16 @@
+#create-vote-app{
+	/*margin-left: 40px;
+	margin-right: 40px;*/
+	margin: 0 auto;
+	width: 30%
+}
+
+button {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+input.btn-primary {
+   margin-top: 10px;
+  margin-right: 10px;
+}

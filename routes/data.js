@@ -13,13 +13,11 @@ router.use(function(req,res,next){
                 console.log('retrieved data');
                 pollData = {"pollData": polls};
                 console.log(pollData);
-                // res.json(pollData);       // send Polldata to browser
-
-                mongoose.connection.close(function() {
-                    console.log(
-                        'Mongoose connection disconnected'
-                    );
-                });
+                // mongoose.connection.close(function() {
+                //     console.log(
+                //         'Mongoose connection disconnected'
+                //     );
+                // });
                  next();
             });
 
