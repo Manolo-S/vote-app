@@ -2,7 +2,8 @@
 
 $.getJSON('http://localhost:3000/data/polldata', createPoll)
 
-var numbers = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six"}; //TODO increase to 20
+var numbers = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five",
+               6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten"}; //TODO increase to 20
 
 var pollNumber = 1;
 
@@ -29,6 +30,18 @@ function storeDataLocally (pollDataArr){
 		index++;
 		});
 }
+
+function storeInMongoDB(){
+		var pollArr;
+		var pollData = [];
+	    console.log('sessionstorage length', sessionStorage.length)
+		for (var i = 0; i < sessionStorage.length; i++){
+			    pollArr = sessionStorage.getItem(i).split(",");
+				pollData.push(pollArr);	 
+			}
+		pollData = {"pollData": pollData};
+		$.post('http://localhost:3000/store-in-db', pollData);
+	}
 
 function createPoll (polldata, polls){
     var pollData = polldata.pollData;
@@ -127,7 +140,7 @@ function createPoll (polldata, polls){
 		}
 	});
 
-
+	
 
 	var RecipeBox = React.createClass({
 
@@ -189,6 +202,8 @@ function createPoll (polldata, polls){
 				console.log('sessionstorage', sessionStorage.getItem(index));
 				index++;
 			});
+
+			storeInMongoDB();
 
 			return this.setState({recipes: this.state.recipes});
 			

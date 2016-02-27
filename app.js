@@ -60,7 +60,7 @@ pollModel.create({
 
              console.log('saved polldata');
            
-            }});
+            } else {console.log(err)}});
 
 
 
@@ -110,13 +110,51 @@ app.use('/data/polldata', function(req,res,next){ //TODO data functies in
 
 });
 
+app.get('/data/polldata', function(req, res) {
+    res.json(pollData);    
+});
+
+app.use('/create-poll', function(req, res, next){
+  if (mongoose.connection.readyState = 0){        //apart bestand als het lukt
+      var db = mongoose.connect('mongodb://localhost/voteapp');
+    }
+
+  pollModel.find({}, function(err, polls) {
+                console.log('retrieved data');
+                pollData = {"pollData": polls};
+                console.log(pollData);
+
+                mongoose.connection.close(function() {
+                    console.log(
+                        'Mongoose connection disconnected'
+                    );
+                });
+                 next();
+            });
+})
+
 app.get('/create-poll', function(req, res){
   res.render('createPoll.ejs');
 });
 
-app.get('/data/polldata', function(req, res) {
-    res.json(pollData);    
+function storePolls(dataArr){
+  console.log(dataArr);
+    var pollItemsArr = dataArr.slice(2);
+      pollModel.create({
+          pollName: dataArr[1],
+          pollItems: pollItemsArr.map(pollItemsFun)
+              }, function(err, polls) {
+              if (!err) {
+                      pollData = {"pollData": polls};
+                      console.log('saved polldata', pollData);
+      }});
+}
+
+app.post('/store-in-db', function(req, res){
+  var dataArr = req.body.pollData;
+  dataArr.map(storePolls);
 });
+
 
 app.use('/', index);
 
