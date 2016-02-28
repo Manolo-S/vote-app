@@ -4,15 +4,44 @@
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="stylesheets/style.css" rel="stylesheet">
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="lib/highcharts/highcharts.js"></script>
-    <script src="javascripts/pollStorage.js"></script>
-   
+    <script src="lib/jquery/dist/jquery.min.js">
+    </script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js">
+    </script>
+    <script src="lib/highcharts/highcharts.js">
+    </script>
+    <script src="javascripts/pollStorage.js">
+    </script>
     <title></title>
 </head>
 <body onload="abc()">
-    <div>
+    <nav class='navbar navbar-default container'>
+        <div class='navbar-header'>
+            <a class='navbar-brand' href='#'>FCC-Voting</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <a class="googleplus" href="/auth/google"><i class=
+                "fa fa-google-plus"></i></a>
+            </li>
+            <li>
+                <a class="twitter" href="/auth/twitter"><i class=
+                "fa fa-twitter"></i></a>
+            </li>
+            <li>
+                <a class="facebook" href="/auth/facebook"><i class=
+                "fa fa-facebook"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="jumbotron container">
+        <h2>Choose a poll</h2>
+        <div id='menu'></div>
+        <div id="container"></div>
+    </div><!--  <div>
         <ul class="social list-inline">
             <li>
                 <a class="googleplus" href="/auth/google"><i class=
@@ -23,10 +52,6 @@
             </li>
         </ul>
     </div>
-    
-       
-            
-    
-    <div id="container"></div>
-</body >
+     -->
+</body>
 </html>
