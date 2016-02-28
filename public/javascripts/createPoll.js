@@ -40,7 +40,7 @@ function storeInMongoDB(){
 				pollData.push(pollArr);	 
 			}
 		pollData = {"pollData": pollData};
-		$.post('http://localhost:3000/store-in-db', pollData);
+		$.post('http://localhost:3000/store-new-poll', pollData);
 	}
 
 function createPoll (polldata, polls){

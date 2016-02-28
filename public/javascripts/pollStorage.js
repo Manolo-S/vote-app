@@ -71,12 +71,12 @@ function updatePoll(){
     var selectedPoll = document.getElementById('pollMenu').value;
     var poll = allPollsData[selectedPoll];
     console.log('selected poll data', poll);
-    var votes = allPollsData[selectedPoll].pollItems[voteCategorie].votes;
-    allPollsData[selectedPoll].pollItems[voteCategorie].votes = votes + 1;
-    console.log(allPollsData[selectedPoll].pollItems[voteCategorie].votes);
+    var votes = poll.pollItems[voteCategorie].votes;
+    poll.pollItems[voteCategorie].votes = votes + 1;
+    console.log(poll.pollItems[voteCategorie].votes);
     //TODO send updated polldata to DB, find poll, update no of votes of poll in DB
-    // pollData = {"pollData": pollData};
-    // $.post('http://localhost:3000/store-in-db', pollData);
+    var updatedPoll = {updatedPoll: poll};
+    $.post('http://localhost:3000/store-vote', updatedPoll);
 }
 
 function categorieMenu(){

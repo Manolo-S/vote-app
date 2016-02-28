@@ -50,17 +50,17 @@ var data = [{
     }]
 }];
 
-pollModel.create({
-    pollName: data[0].pollName,
-    pollItems: data[0].pollItems.map(pollItemsFun)
-        }, function(err, polls) {
-        if (!err) {
-                pollData = {"pollData": polls};
-                console.log(pollData);
+// pollModel.create({
+//     pollName: data[0].pollName,
+//     pollItems: data[0].pollItems.map(pollItemsFun)
+//         }, function(err, polls) {
+//         if (!err) {
+//                 pollData = {"pollData": polls};
+//                 console.log(pollData);
 
-             console.log('saved polldata');
+//              console.log('saved polldata');
            
-            } else {console.log(err)}});
+//             } else {console.log(err)}});
 
 
 
@@ -156,10 +156,25 @@ function storePolls(dataArr){
       } else {console.log(err)}});
 }
 
-app.post('/store-in-db', function(req, res){
+function updatePoll(updatedPoll){
+  var pollItems = {pollItems: updatedPoll.pollItems};
+  console.log('pollitems', pollItems);
+  var id = updatedPoll._id;
+  pollModel.findByIdAndUpdate(id, pollItems, function(error, polls){
+    if (error){console.log(error)};
+    });
+}
+
+app.post('/store-new-poll', function(req, res){
   var dataArr = req.body.pollData;
 
   dataArr.map(storePolls);
+});
+
+app.post('/store-vote', function(req, res){
+  var updatedPoll = req.body.updatedPoll;
+  console.log('poll received by server', req.body.updatedPoll);
+  updatePoll(updatedPoll);
 });
 
 
