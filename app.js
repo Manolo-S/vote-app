@@ -111,7 +111,8 @@ app.use('/data/polldata', function(req,res,next){ //TODO data functies in
 });
 
 app.get('/data/polldata', function(req, res) {
-    res.json(pollData);    
+    res.json(pollData);    //TODO process array with multiple polls in
+                           //pollStorage.js
 });
 
 app.use('/create-poll', function(req, res, next){
@@ -137,21 +138,27 @@ app.get('/create-poll', function(req, res){
   res.render('createPoll.ejs');
 });
 
+function createpollItems(categorie){
+  return {categorie: categorie, votes: 5};
+}
+
 function storePolls(dataArr){
   console.log(dataArr);
-    var pollItemsArr = dataArr.slice(2);
+    var categoriesArr = (String(dataArr.slice(2))).split(",");
+    console.log('categoriesArr', categoriesArr);
       pollModel.create({
           pollName: dataArr[1],
-          pollItems: pollItemsArr.map(pollItemsFun)
+          pollItems: categoriesArr.map(createpollItems)
               }, function(err, polls) {
               if (!err) {
                       pollData = {"pollData": polls};
                       console.log('saved polldata', pollData);
-      }});
+      } else {console.log(err)}});
 }
 
 app.post('/store-in-db', function(req, res){
   var dataArr = req.body.pollData;
+
   dataArr.map(storePolls);
 });
 
