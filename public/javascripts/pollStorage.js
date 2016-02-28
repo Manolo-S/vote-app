@@ -52,7 +52,8 @@ function pollMenuStr(poll) {
 }
 
 function categorieMenuStr(categorie){
-    str = str + '<option value=' + index + '>' + categorie + '</option>'
+    str = str + '<input type="radio" name="vote-cat" value=' + index + '>' + categorie + '</input><br>'
+    index++;
 }
 
 
@@ -62,20 +63,30 @@ function pollMenu() {
     allPollsData.map(pollMenuStr);
     str += '</select>';
     $('#poll-menu').append(str);
+    index = 0;
 }
 
 function updatePoll(){
-    console.log('updatePoll called');
+    var voteCategorie = $('input:checked').val();
+    var selectedPoll = document.getElementById('pollMenu').value;
+    var poll = allPollsData[selectedPoll];
+    console.log('selected poll data', poll);
+    var votes = allPollsData[selectedPoll].pollItems[voteCategorie].votes;
+    allPollsData[selectedPoll].pollItems[voteCategorie].votes = votes + 1;
+    console.log(allPollsData[selectedPoll].pollItems[voteCategorie].votes);
+    //TODO send updated polldata to DB, find poll, update no of votes of poll in DB
+    // pollData = {"pollData": pollData};
+    // $.post('http://localhost:3000/store-in-db', pollData);
 }
 
 function categorieMenu(){
     str = '';
-    str += '<select id="categorieMenu" onchange="updatePoll()">';
+    str += '<form id="categorieMenu">';
     categories.map(categorieMenuStr);
-    str += '</select>';
+    str += '</form>';
     $('#categorie-menu').empty();  
     $('#categorie-menu').append(str);   
-
+    index = 0;
 
 }
 
