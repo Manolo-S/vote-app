@@ -7,9 +7,10 @@ var str = '';
 
 function changeChart() {
     console.log('changeChart called');
-    var selectedPoll = document.getElementById('menuSelector').value;
+    var selectedPoll = document.getElementById('pollMenu').value;
     pollName = allPollsData[selectedPoll].pollName;
     categories = allPollsData[selectedPoll].pollItems.map(categoriesFun);
+    categorieMenu();
     votes = allPollsData[selectedPoll].pollItems.map(votesFun);
     buildChart();
 }
@@ -31,7 +32,7 @@ function buildChart() {
         },
         yAxis: {
             title: {
-                text: 'Votes'
+                text: 'Number of votes'
             }
         },
         series: [{
@@ -44,17 +45,38 @@ function buildChart() {
     var chart = new Highcharts.Chart(options);
 }
 
-function buildMenuStr(poll) {
+function pollMenuStr(poll) {
     var pollName = poll.pollName;
     str = str + '<option value=' + index + '>' + pollName + '</option>'
     index++;
 }
 
-function buildMenu() {
-    str += '<select id="menuSelector" onchange="changeChart()">';
-    allPollsData.map(buildMenuStr);
+function categorieMenuStr(categorie){
+    str = str + '<option value=' + index + '>' + categorie + '</option>'
+}
+
+
+function pollMenu() {
+    str = '';
+    str += '<select id="pollMenu" onchange="changeChart()">';
+    allPollsData.map(pollMenuStr);
     str += '</select>';
-    $('#menu').append(str);
+    $('#poll-menu').append(str);
+}
+
+function updatePoll(){
+    console.log('updatePoll called');
+}
+
+function categorieMenu(){
+    str = '';
+    str += '<select id="categorieMenu" onchange="updatePoll()">';
+    categories.map(categorieMenuStr);
+    str += '</select>';
+    $('#categorie-menu').empty();  
+    $('#categorie-menu').append(str);   
+
+
 }
 
 function categoriesFun(pollItem) {
@@ -66,27 +88,23 @@ function votesFun(pollItem) {
     return pollItem.votes;
 }
 
-function changeChart() {
-    console.log('changeChart called');
-    var selectedPoll = document.getElementById('menuSelector').value;
-    pollName = allPollsData[selectedPoll].pollName;
-    categories = allPollsData[selectedPoll].pollItems.map(categoriesFun);
-    votes = allPollsData[selectedPoll].pollItems.map(votesFun);
-    buildChart();
-}
+// function changeChart() {
+//     console.log('changeChart called');
+//     var selectedPoll = document.getElementById('pollMenu').value;
+//     pollName = allPollsData[selectedPoll].pollName;
+//     categories = allPollsData[selectedPoll].pollItems.map(categoriesFun);
+//     votes = allPollsData[selectedPoll].pollItems.map(votesFun);
+//     buildChart();
+// }
 
 
 function success(result) {
-    console.log('succes func called');
-    console.log('result', result);
-    // console.log('result.polldata', result.pollData[0].pollName);
     allPollsData = result.pollData;
-    console.log('allPollsData', allPollsData)
     pollName = result.pollData[0].pollName;
     categories = result.pollData[0].pollItems.map(categoriesFun);
     votes = result.pollData[0].pollItems.map(votesFun);
-    console.log(pollName, categories, votes)
-    buildMenu();
+    pollMenu();
+    categorieMenu();
     buildChart();
 }
 
