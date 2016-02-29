@@ -6,7 +6,6 @@ var index = 0;
 var str = '';
 
 function changeChart() {
-    console.log('changeChart called');
     var selectedPoll = document.getElementById('pollMenu').value;
     pollName = allPollsData[selectedPoll].pollName;
     categories = allPollsData[selectedPoll].pollItems.map(categoriesFun);
@@ -70,13 +69,14 @@ function updatePoll(){
     var voteCategorie = $('input:checked').val();
     var selectedPoll = document.getElementById('pollMenu').value;
     var poll = allPollsData[selectedPoll];
-    console.log('selected poll data', poll);
+    // console.log('selected poll data', poll);
     var votes = poll.pollItems[voteCategorie].votes;
     poll.pollItems[voteCategorie].votes = votes + 1;
-    console.log(poll.pollItems[voteCategorie].votes);
-    //TODO send updated polldata to DB, find poll, update no of votes of poll in DB
+    // console.log(poll.pollItems[voteCategorie].votes);
     var updatedPoll = {updatedPoll: poll};
     $.post('http://localhost:3000/store-vote', updatedPoll);
+    changeChart();
+    //TODO add functionality to only vote once use localstorage?
 }
 
 function categorieMenu(){
@@ -99,15 +99,6 @@ function votesFun(pollItem) {
     return pollItem.votes;
 }
 
-// function changeChart() {
-//     console.log('changeChart called');
-//     var selectedPoll = document.getElementById('pollMenu').value;
-//     pollName = allPollsData[selectedPoll].pollName;
-//     categories = allPollsData[selectedPoll].pollItems.map(categoriesFun);
-//     votes = allPollsData[selectedPoll].pollItems.map(votesFun);
-//     buildChart();
-// }
-
 
 function success(result) {
     allPollsData = result.pollData;
@@ -123,3 +114,4 @@ function success(result) {
 function abc() {
     $.getJSON('http://localhost:3000/data/polldata', success)
 }
+

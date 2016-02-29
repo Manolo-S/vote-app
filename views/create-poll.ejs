@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vote App</title>
+        <link href=
+            "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+            rel="stylesheet">
+            <link href="stylesheets/createPoll.css" rel="stylesheet">
+        </head>
+        <body>
+            <!-- <div id="create-vote-app"></div> -->
+            <nav class='navbar navbar-default container'>
+                <div class='navbar-header'>
+                    <a class='navbar-brand' href='#'>FCC-Voting</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="jumbotron container">
+                <h3>Create Poll</h3>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="poll-title">Poll title:</label>
+                        <input class="form-control" id="poll-title">
+                    </div>
+                    <div class="form-group">
+                        <label for="categories">Poll categories:</label> <input class="form-control" id=
+                        "categories" >
+                    </div>
+                    <button class="btn btn-default" type="submit" onclick="storePoll()">Submit</button>
+                </form>
+            </div>
+            
+            <script src=
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+            </script>
+            <script src=
+            "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+            </script>
+            <script src="javascripts/create-poll.js">
+            </script>
+        </body>
+    </html>
